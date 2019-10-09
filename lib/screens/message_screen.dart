@@ -18,16 +18,31 @@ class MessageScreenState extends State<MessageScreen> {
 	
 	bool isMessageInputEdited = false;
 	
+	ScrollController chatMessagesSrollController = new ScrollController();
+	
+	// demo chat messages list
+	List<String> lMessageItems = [
+		"what really happens when they become chosen to leave the grocery store.",
+		"Some trial work for the client.",
+		"is about one sausage leading a group of supermarket products on a quest to discover the truth about their existence",
+		"Vote for your favorite community uploads created for our latest challenge",
+		"Sarah",
+		"Sausage Party, the first R-rated CG animated movie",
+		"Filter quality downloads for your next project by softwares",
+		"This is an Education learning app with a gamification concept. Easy to learn and fun to learn."];
+	
 	@override
 	void initState() {
 		super.initState();
 		// Start listening to changes in message textfield
 		messageController.addListener(_messageInputChange);
 	}
+	
 	@override
 	void dispose() {
 		super.dispose();
 		messageController.dispose();
+		chatMessagesSrollController.dispose();
 	}
 	
 	_messageInputChange() {
@@ -79,8 +94,8 @@ class MessageScreenState extends State<MessageScreen> {
 									begin: Alignment.bottomLeft,
 									end: Alignment.bottomRight,
 									colors: [
-										Color.fromRGBO(220,20,60, 1.0),
-										Color.fromRGBO(220,20,60, 1.0),
+										Color.fromRGBO(205,92,92, 1.0),
+										Color.fromRGBO(205,92,92, 1.0),
 									],
 								),
 							),
@@ -119,7 +134,7 @@ class MessageScreenState extends State<MessageScreen> {
 		return Expanded(
 			flex: 1,
 			child: Container(
-				padding: EdgeInsets.fromLTRB(24, 8, 8, 24),
+				padding: EdgeInsets.only(bottom: 20.0),
 				decoration: BoxDecoration(
 					color: Colors.white,
 					borderRadius: BorderRadius.only(
@@ -127,7 +142,128 @@ class MessageScreenState extends State<MessageScreen> {
 						bottomRight: Radius.circular(36.0),
 					),
 				),
+				child: lMessageItems.length <= 0 ?
+					null
+					:
+					ListView.builder(
+						itemCount: lMessageItems.length,
+						reverse: true,
+						physics: BouncingScrollPhysics(),
+						itemBuilder: (context, i) => messageItemComponent(lMessageItems[i], context, i.isOdd,i),
+					)
+				,
 			),
+		);
+	}
+	
+	Widget messageItemComponent(String lMessageItem, context, bool isOdd, int index) {
+		
+		final mWidth = MediaQuery.of(context).size.width * 0.75;
+		
+		double marginTop = index == 1 ? 10 : 20;
+		
+		return Row(
+			mainAxisSize: MainAxisSize.max,
+			mainAxisAlignment: isOdd ? MainAxisAlignment.start : MainAxisAlignment.end,
+			children: <Widget>[
+				Container(
+					constraints: BoxConstraints(
+						maxWidth: mWidth,
+					),
+					margin: EdgeInsets.fromLTRB(20.0, marginTop, 20.0, 20.0),
+					decoration: BoxDecoration(
+						color: Colors.transparent,
+						borderRadius: BorderRadius.circular(10),
+					),
+					child: isOdd ?
+						receivedMessageLayout(lMessageItem)
+						:
+						sentSentMessageLayout(lMessageItem)
+					,
+				),
+			],
+		);
+	}
+	
+	Widget receivedMessageLayout(String lMessageItem) {
+		return Row(
+			crossAxisAlignment: CrossAxisAlignment.start,
+			children: <Widget>[
+				CircleAvatar(
+					radius: 18.0,
+					backgroundImage:NetworkImage(
+						'https://via.placeholder.com/150',
+					),
+					backgroundColor: Colors.transparent,
+				),
+				SizedBox(width: 8.0,),
+				Expanded(
+					child: Column(
+						crossAxisAlignment: CrossAxisAlignment.start,
+						children: <Widget>[
+							Text(
+								lMessageItem,
+								style: TextStyle(
+									color: Colors.black,
+									fontWeight: FontWeight.bold,
+								),
+							),
+							SizedBox(height: 4.0,),
+							Text(
+								"12:43 AM",
+								style: TextStyle(
+									fontSize: 11.0,
+									color: Colors.grey.shade400,
+									fontWeight: FontWeight.bold,
+								),
+							),
+						],
+					),
+				),
+			],
+		);
+	}
+	
+	Widget sentSentMessageLayout(String lMessageItem) {
+		return Column(
+			crossAxisAlignment: CrossAxisAlignment.end,
+			children: <Widget>[
+				Container(
+					padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+					decoration: BoxDecoration(
+						gradient: LinearGradient(
+							stops: [0.4, 1.0],
+							begin: FractionalOffset.topCenter,
+							end: FractionalOffset.bottomCenter,
+							colors: [
+								Color.fromRGBO(205,92,92, 1.0),
+								Color.fromRGBO(178,34,34, 1),
+							],
+						),
+						borderRadius: BorderRadius.only(
+							topRight: Radius.circular(24.0),
+							topLeft: Radius.circular(24.0),
+							bottomLeft: Radius.circular(24.0),
+						),
+					),
+					child: Text(
+						lMessageItem,
+						style: TextStyle(
+							color: Colors.white,
+							fontWeight: FontWeight.normal,
+						),
+					),
+				),
+				SizedBox(height: 2.0,),
+				Text(
+					"12:43 AM",
+					style: TextStyle(
+						fontSize: 11.0,
+						color: Colors.grey.shade400,
+						fontWeight: FontWeight.bold,
+					),
+				),
+			],
 		);
 	}
 	
@@ -169,7 +305,7 @@ class MessageScreenState extends State<MessageScreen> {
 						),
 						borderRadius: BorderRadius.circular(32.0),
 					),
-					fillColor: Color.fromRGBO(205,92,92, 0.8),
+					fillColor: Color.fromRGBO(139,0,0, 0.6),
 					filled: true,
 					focusedBorder: OutlineInputBorder(
 						borderSide: BorderSide(
