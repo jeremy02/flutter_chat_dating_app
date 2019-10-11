@@ -63,7 +63,7 @@ class RecentChatListItem extends StatelessWidget{
 				padding: EdgeInsets.all(8.0),
 				decoration: BoxDecoration(
 					shape: BoxShape.circle,
-					color: Color.fromRGBO(178,34,34, 0.8),
+					color: Color.fromRGBO(237,86,93, 1.0),
 				),
 				child: Text(
 					"4",
