@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_dating_app/models/chat_model.dart';
+import 'package:flutter_chat_dating_app/widgets/custom_border.dart';
 import 'package:intl/intl.dart';
 
 class MessageScreen extends StatefulWidget {
@@ -154,6 +155,7 @@ class MessageScreenState extends State<MessageScreen> {
 	}
 	
 	Widget messageListComponent (BuildContext context) {
+		// sort the list using dates
 		lMessageItems.sort((a, b) => a.date.compareTo(b.date));
 		
 		// model to compare to
@@ -163,9 +165,7 @@ class MessageScreenState extends State<MessageScreen> {
 		List<ListItem> _listChildren = <ListItem>[];
 		lMessageItems.forEach((ChatModel model) {
 			
-			int previous = model.date.difference(prev.date).inDays;
-			print(previous);
-			if (prev != null && previous >= 1) {
+			if (prev != null && DateTime(model.date.year, model.date.month, model.date.day) != DateTime(prev.date.year, prev.date.month, prev.date.day)) {
 				shownHeader = false; // if dates are different, beginning of a new group, so header is yet to be shown
 			}
 			
@@ -204,28 +204,57 @@ class MessageScreenState extends State<MessageScreen> {
 						controller: chatMessagesSrollController,
 						itemBuilder: (context, index) {
 							final item = _listChildren[index];
-							print(item.toString());
-							print(item is HeadingItem);
+							
 							
 							if (item is HeadingItem) {
-								return ListTile(
-									title: Text(
-										item.heading.date.toString(),
-										style: TextStyle(
-											color: Colors.black,
+								
+								final textDate = item.heading.date;
+								final dateNow = DateTime.now();
+								final difference = dateNow.difference(textDate).inDays;
+								
+								return Row(
+									mainAxisSize: MainAxisSize.max,
+									crossAxisAlignment: CrossAxisAlignment.center,
+									mainAxisAlignment: MainAxisAlignment.center,
+									children: <Widget>[
+										Container(
+											padding: EdgeInsets.symmetric(horizontal: 10.0),
+											margin: EdgeInsets.symmetric(vertical: 10.0),
+											decoration: BoxDecoration(
+												borderRadius: BorderRadius.only(
+													bottomLeft: Radius.circular(16.0),
+													bottomRight: Radius.circular(16.0),
+												),
+												color: Colors.white,
+												boxShadow: <BoxShadow>[
+													CustomBoxShadow(
+														color: Colors.grey.shade300,
+														offset: new Offset(0.0, 5.0),
+														blurRadius: 5.0,
+														blurStyle: BlurStyle.outer,
+														spreadRadius: 1.0,
+													)
+												],
+											),
+											child: Center(
+												child: Text(
+													difference == 1 ? "Yesterday"
+														:
+													(difference == 0 ? "Today" : new DateFormat.MMMd().format(item.heading.date))
+													,
+													style: TextStyle(
+														color: Colors.red.shade900,
+														fontSize: 14.0,
+													),
+												),
+											),
 										),
-									),
+									],
 								);
 							}else if (item is MessageItem) {
-								return ListTile(
-									title: Text(
-										item.content.text.toString(),
-										style: TextStyle(
-											color: Colors.black,
-										),
-									),
-									subtitle: Text(item.toString()),
-								);
+								return messageItemComponent(item.content, context, index.isOdd,index);
+							}else{
+								return null;
 							}
 						},
 					),
@@ -384,6 +413,13 @@ class MessageScreenState extends State<MessageScreen> {
 									));
 								});
 							messageController.clear();
+							
+							// scroll to bottom of list
+							chatMessagesSrollController.animateTo(
+								0.0,
+								curve: Curves.easeOut,
+								duration: const Duration(milliseconds: 300),
+							);
 						},
 					),
 					hintText: "Type you message here",

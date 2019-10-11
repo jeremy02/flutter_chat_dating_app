@@ -69,7 +69,7 @@ class RecentChatListItem extends StatelessWidget{
 					"4",
 					style: TextStyle(
 						color: Colors.white,
-						fontSize: 12.0,
+						fontSize: 14.0,
 					),
 				),
 			);
