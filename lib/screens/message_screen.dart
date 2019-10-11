@@ -14,6 +14,23 @@ class MessageScreen extends StatefulWidget {
 		return MessageScreenState();
 	}
 }
+// The base class for the different types of items the list can contain.
+abstract class ListItem {}
+
+// A ListItem that contains data to display a heading.
+class HeadingItem implements ListItem {
+	final ChatModel heading;
+	
+	HeadingItem(this.heading);
+}
+
+// A ListItem that contains data to display a message.
+class MessageItem implements ListItem {
+	final ChatModel content;
+	
+	MessageItem(this.content);
+}
+
 class MessageScreenState extends State<MessageScreen> {
 	
 	final messageController = TextEditingController();
@@ -32,6 +49,7 @@ class MessageScreenState extends State<MessageScreen> {
 //		"Sausage Party, the first R-rated CG animated movie",
 //		"Filter quality downloads for your next project by softwares",
 //		"This is an Education learning app with a gamification concept. Easy to learn and fun to learn."];
+	
 	
 	@override
 	void initState() {
@@ -58,6 +76,7 @@ class MessageScreenState extends State<MessageScreen> {
 	
 	@override
 	Widget build(BuildContext context) {
+		
 		return Scaffold(
 			appBar: PreferredSize(
 				child: AppBar(
@@ -135,8 +154,35 @@ class MessageScreenState extends State<MessageScreen> {
 	}
 	
 	Widget messageListComponent (BuildContext context) {
-		// wrapped around a column so that the avatar doesn't stretch
-		return Flexible(
+		lMessageItems.sort((a, b) => a.date.compareTo(b.date));
+		
+		// model to compare to
+		ChatModel prev = lMessageItems[0];
+		bool shownHeader = false;
+		
+		List<ListItem> _listChildren = <ListItem>[];
+		lMessageItems.forEach((ChatModel model) {
+			
+			int previous = model.date.difference(prev.date).inDays;
+			print(previous);
+			if (prev != null && previous >= 1) {
+				shownHeader = false; // if dates are different, beginning of a new group, so header is yet to be shown
+			}
+			
+			if (!shownHeader) {
+				// if header for a group is not shown yet, add it to the list
+				_listChildren.add(HeadingItem(model));
+				prev = model; // keep the current model for reference to check if group has changed
+				shownHeader = true;
+			}
+			
+			_listChildren.add(MessageItem(model));
+			
+		});
+		
+		_listChildren = _listChildren.reversed.toList();
+		
+		return Expanded(
 			flex: 1,
 			child: Container(
 				padding: EdgeInsets.only(bottom: 20.0),
@@ -147,18 +193,42 @@ class MessageScreenState extends State<MessageScreen> {
 						bottomRight: Radius.circular(36.0),
 					),
 				),
-				child: lMessageItems.length <= 0 ?
+				child: _listChildren.length <= 0 ?
 					null
 					:
 					ListView.builder(
-						itemCount: lMessageItems.length,
+						itemCount: _listChildren.length,
 						reverse: true,
 						physics: BouncingScrollPhysics(),
 						shrinkWrap: true,
 						controller: chatMessagesSrollController,
-						itemBuilder: (context, i) => messageItemComponent(lMessageItems[i], context, i.isOdd,i),
-					)
-				,
+						itemBuilder: (context, index) {
+							final item = _listChildren[index];
+							print(item.toString());
+							print(item is HeadingItem);
+							
+							if (item is HeadingItem) {
+								return ListTile(
+									title: Text(
+										item.heading.date.toString(),
+										style: TextStyle(
+											color: Colors.black,
+										),
+									),
+								);
+							}else if (item is MessageItem) {
+								return ListTile(
+									title: Text(
+										item.content.text.toString(),
+										style: TextStyle(
+											color: Colors.black,
+										),
+									),
+									subtitle: Text(item.toString()),
+								);
+							}
+						},
+					),
 			),
 		);
 	}
@@ -306,14 +376,12 @@ class MessageScreenState extends State<MessageScreen> {
 							var message = messageController.text.trim();
 							if (message !=null || message != '')
 								setState(() {
-									
-									// create new model
-									ChatModel newChat = new ChatModel();
-									newChat.date = DateTime.now();
-									newChat.text = message;
-									
+									// create new model and
 									// add to list at index 0
-									lMessageItems.insert(0, newChat);
+									lMessageItems.insert(0, ChatModel(
+										date: DateTime.now(),
+										text: message,
+									));
 								});
 							messageController.clear();
 						},
