@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_dating_app/components/sectioned_list_item.dart';
 import 'package:flutter_chat_dating_app/models/chat_model.dart';
 import 'package:flutter_chat_dating_app/widgets/custom_border.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +30,7 @@ class MessagesListState extends State<MessagesList> {
 		ChatModel prev = widget.lMessageChatItems[0];
 		bool shownHeader = false;
 		
-		List<ListItem> _listChildren = <ListItem>[];
+		List<SectionedListItem> _listChildren = <SectionedListItem>[];
 		widget.lMessageChatItems.forEach((ChatModel model) {
 			
 			if (prev != null && DateTime(model.date.year, model.date.month, model.date.day) != DateTime(prev.date.year, prev.date.month, prev.date.day)) {
@@ -60,7 +61,7 @@ class MessagesListState extends State<MessagesList> {
 		);
 	}
 	
-	Widget _buildItem(BuildContext context, ListItem item, Animation<double> animation, int index) {
+	Widget _buildItem(BuildContext context, SectionedListItem item, Animation<double> animation, int index) {
 		TextStyle textStyle = new TextStyle(fontSize: 20);
 		
 		return Padding(
@@ -73,10 +74,10 @@ class MessagesListState extends State<MessagesList> {
 		);
 	}
 	
-	Widget buildListItem(ListItem item, int index){
+	Widget buildListItem(SectionedListItem item, int index){
 		if (item is HeadingItem) {
 			
-			final textDate = item.heading.date;
+			final textDate = item.chatModelHeading.date;
 			final dateNow = DateTime.now();
 			final difference = dateNow.difference(textDate).inDays;
 			
@@ -108,7 +109,7 @@ class MessagesListState extends State<MessagesList> {
 							child: Text(
 								difference == 1 ? "Yesterday"
 									:
-								(difference == 0 ? "Today" : new DateFormat.MMMd().format(item.heading.date))
+								(difference == 0 ? "Today" : new DateFormat.MMMd().format(item.chatModelHeading.date))
 								,
 								style: TextStyle(
 									color: Colors.red.shade900,
@@ -120,7 +121,7 @@ class MessagesListState extends State<MessagesList> {
 				],
 			);
 		}else if (item is MessageItem) {
-			return messageItemComponent(item.content, context, index.isOdd,index);
+			return messageItemComponent(item.cchatModelContent, context, index.isOdd,index);
 		}else{
 			return null;
 		}
@@ -238,20 +239,3 @@ class MessagesListState extends State<MessagesList> {
 	}
 }
 
-
-// The base class for the different types of items the list can contain.
-abstract class ListItem {}
-
-// A ListItem that contains data to display a heading.
-class HeadingItem implements ListItem {
-	final ChatModel heading;
-	
-	HeadingItem(this.heading);
-}
-
-// A ListItem that contains data to display a message.
-class MessageItem implements ListItem {
-	final ChatModel content;
-	
-	MessageItem(this.content);
-}
