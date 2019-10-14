@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_chat_dating_app/components/message_list.dart';
+import 'package:flutter_chat_dating_app/components/message_list_component.dart';
 import 'package:flutter_chat_dating_app/models/chat_model.dart';
 
 class MessageScreen extends StatefulWidget {
@@ -131,7 +131,7 @@ class MessageScreenState extends State<MessageScreen> {
 									child: lMessageItems.length <= 0 ?
 									null
 										:
-									MessagesList(
+									MessagesListComponent(
 										srollController: chatMessagesSrollController,
 										lMessageChatItems : lMessageItems,
 										listKey : listKey,

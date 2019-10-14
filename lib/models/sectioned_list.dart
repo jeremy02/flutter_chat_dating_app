@@ -13,7 +13,7 @@ class HeadingItem implements SectionedListItem {
 
 // A ListItem that contains data to display a message.
 class MessageItem implements SectionedListItem {
-	final ChatModel cchatModelContent;
+	final ChatModel chatModelContent;
 	
-	MessageItem(this.cchatModelContent);
+	MessageItem(this.chatModelContent);
 }
