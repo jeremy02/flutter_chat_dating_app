@@ -41,6 +41,8 @@ class MessageScreenState extends State<MessageScreen> {
 	
 	ScrollController chatMessagesSrollController = new ScrollController();
 	
+	AnimatedListState get _animatedList => listKey.currentState;
+	
 	@override
 	void initState() {
 		super.initState();
@@ -201,7 +203,8 @@ class MessageScreenState extends State<MessageScreen> {
 										date: DateTime.now(),
 										text: message,
 									));
-									listKey.currentState.insertItem(0);
+									
+									_animatedList.insertItem(0);
 								});
 							messageController.clear();
 							
