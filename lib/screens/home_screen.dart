@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_dating_app/components/bottom_bar.dart';
 import 'package:flutter_chat_dating_app/components/custom_app_bar.dart';
+import 'package:flutter_chat_dating_app/models/users_model.dart';
 import 'package:flutter_chat_dating_app/widgets/dashed_list_divider.dart';
 import 'package:flutter_chat_dating_app/widgets/friends_list_item.dart';
 import 'package:flutter_chat_dating_app/widgets/recent_chat_list_item.dart';
@@ -58,10 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
 												shrinkWrap: true,
 												physics: BouncingScrollPhysics(),
 												scrollDirection: Axis.horizontal,
-												itemCount: lChatItems == null ? 0 : lChatItems.length,
+												itemCount: lChatUsers.length,
 												controller: scrollController,
 												itemBuilder: (BuildContext context, int index){
-													return FriendsListItem(lChatItem: lChatItems[index],);
+													return FriendsListItem(lChatUser: lChatUsers[index],);
 												},
 											),
 										),
