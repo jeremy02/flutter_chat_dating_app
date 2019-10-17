@@ -70,11 +70,14 @@ class MessageScreenState extends State<MessageScreen> {
 						),
 						onPressed: () => Navigator.pop(context),
 					),
-					title: Text(
-						widget.recentChatDetails.user.firstname,
-						style: TextStyle(
-							color: Colors.black,
-							fontWeight: FontWeight.bold,
+					title:Hero(
+						tag: widget.recentChatDetails.user.fullName,
+						child: Text(
+							widget.recentChatDetails.user.fullName,
+							style: TextStyle(
+								color: Colors.black,
+								fontWeight: FontWeight.bold,
+							),
 						),
 					),
 					actions: <Widget>[
@@ -138,12 +141,15 @@ class MessageScreenState extends State<MessageScreen> {
 			child: Column(
 				mainAxisAlignment: MainAxisAlignment.center,
 				children: <Widget>[
-					CircleAvatar(
-						radius: 20,
-						backgroundImage:AssetImage(
-							widget.recentChatDetails.user.imagePath,
+					Hero(
+						tag: widget.recentChatDetails.user.id,
+						child: CircleAvatar(
+							radius: 20,
+							backgroundImage:AssetImage(
+								widget.recentChatDetails.user.imagePath,
+							),
+							backgroundColor: Colors.transparent,
 						),
-						backgroundColor: Colors.transparent,
 					),
 				],
 			),

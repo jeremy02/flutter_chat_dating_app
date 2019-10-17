@@ -82,12 +82,15 @@ class RecentChatListItem extends StatelessWidget{
 	}
 	
 	Widget _imageContent() {
-		return CircleAvatar(
-			radius: 32.0,
-			backgroundImage:AssetImage(
-				lRecentChat.user.imagePath,
+		return Hero(
+			tag: lRecentChat.user.id,
+			child: CircleAvatar(
+				radius: 32.0,
+				backgroundImage:AssetImage(
+					lRecentChat.user.imagePath,
+				),
+				backgroundColor: Colors.transparent,
 			),
-			backgroundColor: Colors.transparent,
 		);
 	}
 	
@@ -98,12 +101,15 @@ class RecentChatListItem extends StatelessWidget{
 				crossAxisAlignment: CrossAxisAlignment.start,
 				mainAxisAlignment: MainAxisAlignment.center,
 				children: <Widget>[
-					Text(
-						lRecentChat.user.fullName,
-						style: TextStyle(
-							color: Colors.black,
-							fontSize: 16.0,
-							fontWeight: FontWeight.bold,
+					Hero(
+						tag: lRecentChat.user.fullName,
+						child: Text(
+							lRecentChat.user.fullName,
+							style: TextStyle(
+								color: Colors.black,
+								fontSize: 16.0,
+								fontWeight: FontWeight.bold,
+							),
 						),
 					),
 					SizedBox(height: 4.0,),
