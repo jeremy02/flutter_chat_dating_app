@@ -15,7 +15,6 @@ class UserModel {
 	UserModel({this.id,this.firstname,this.lastname,this.imagePath,});
 }
 
-
 // random number
 var rnd = new Random();
 
