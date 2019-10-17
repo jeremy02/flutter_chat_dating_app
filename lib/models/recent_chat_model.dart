@@ -35,15 +35,15 @@ List<String> lDemoMessageItems = [
 
 List<RecentChatModel> lRecentChats = [
 	RecentChatModel(
-		id: rnd.nextInt(100), user: lChatUsers[0], lastText: lDemoMessageItems[0], chatTime: lMessageItems[0].date,
+		id: rnd.nextInt(100), user: lChatUsers[0], lastText: lDemoMessageItems[0], chatTime: lMessageItems[6].date,
 		isFromMe: rnd.nextInt(100).isEven, unreadCount: min + rnd.nextInt(max - min),
 	),
 	RecentChatModel(
-		id: rnd.nextInt(100), user: lChatUsers[1], lastText: lDemoMessageItems[1], chatTime: lMessageItems[1].date,
+		id: rnd.nextInt(100), user: lChatUsers[1], lastText: lDemoMessageItems[1], chatTime: lMessageItems[5].date,
 		isFromMe: rnd.nextInt(100).isEven, unreadCount: min + rnd.nextInt(max - min),
 	),
 	RecentChatModel(
-		id: rnd.nextInt(100), user: lChatUsers[2], lastText: lDemoMessageItems[2], chatTime: lMessageItems[2].date,
+		id: rnd.nextInt(100), user: lChatUsers[2], lastText: lDemoMessageItems[2], chatTime: lMessageItems[4].date,
 		isFromMe: rnd.nextInt(100).isEven, unreadCount: min + rnd.nextInt(max - min),
 	),
 	RecentChatModel(
@@ -51,11 +51,11 @@ List<RecentChatModel> lRecentChats = [
 		isFromMe: rnd.nextInt(100).isEven, unreadCount: 0,
 	),
 	RecentChatModel(
-		id: rnd.nextInt(100), user: lChatUsers[4], lastText: lDemoMessageItems[4], chatTime: lMessageItems[4].date,
+		id: rnd.nextInt(100), user: lChatUsers[4], lastText: lDemoMessageItems[4], chatTime: lMessageItems[2].date,
 		isFromMe: rnd.nextInt(100).isEven, unreadCount: min + rnd.nextInt(max - min),
 	),
 	RecentChatModel(
-		id: rnd.nextInt(100), user: lChatUsers[5], lastText: lDemoMessageItems[5], chatTime: lMessageItems[5].date,
+		id: rnd.nextInt(100), user: lChatUsers[5], lastText: lDemoMessageItems[5], chatTime: lMessageItems[0].date,
 		isFromMe: rnd.nextInt(100).isEven, unreadCount: min + rnd.nextInt(max - min),
 	),
 ];

@@ -11,7 +11,7 @@ class ChatModel {
 DateTime now = DateTime.now();
 
 List<ChatModel> lMessageItems = [
-	ChatModel(date: DateTime(now.year, now.month, now.day - 2, 19, 03), text: lDemoMessageItems[7],),
+	ChatModel(date: DateTime(now.year, now.month, now.day - 3, 19, 03), text: lDemoMessageItems[7],),
 	ChatModel(date: DateTime(now.year, now.month, now.day - 1, 19, 01), text: lDemoMessageItems[6],),
 	ChatModel(date: DateTime(now.year, now.month, now.day - 1, 7, 00), text: lDemoMessageItems[5],),
 	ChatModel(date: DateTime(now.year, now.month, now.day - 1, 6, 34), text: lDemoMessageItems[4],),

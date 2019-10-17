@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_dating_app/components/bottom_bar.dart';
 import 'package:flutter_chat_dating_app/components/custom_app_bar.dart';
+import 'package:flutter_chat_dating_app/models/recent_chat_model.dart';
 import 'package:flutter_chat_dating_app/models/users_model.dart';
 import 'package:flutter_chat_dating_app/widgets/dashed_list_divider.dart';
 import 'package:flutter_chat_dating_app/widgets/friends_list_item.dart';
@@ -19,8 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
 	ScrollController scrollController = new ScrollController();
 	
 	ScrollController chatListSrollController = new ScrollController();
-	
-	List<String> lChatItems = ["Harry","Timothy","Frankine","Ronald","Sarah","2","Third","4"];
 	
 	@override
 	void initState() {
@@ -140,14 +139,14 @@ class _HomeScreenState extends State<HomeScreen> {
 					shrinkWrap: true,
 					physics: BouncingScrollPhysics(),
 					scrollDirection: Axis.vertical,
-					reverse: true,
-					itemCount: lChatItems == null ? 0 : lChatItems.length,
+					reverse: false,
+					itemCount: lRecentChats.length,
 					controller: chatListSrollController,
 					separatorBuilder: (context, index) => DashedListDivider(
 						totalWidth : MediaQuery.of(context).size.width , dashWidth: 16.0,
 						emptyWidth: 16.0, dashHeight: 1.0, dashColor : Colors.grey.shade400),
 					itemBuilder: (context, index){
-						return RecentChatListItem(listPosition : index);
+						return RecentChatListItem(lRecentChat : lRecentChats[index]);
 					},
 				),
 			),

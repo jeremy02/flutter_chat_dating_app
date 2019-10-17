@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_dating_app/components/message_list_component.dart';
 import 'package:flutter_chat_dating_app/models/chat_model.dart';
+import 'package:flutter_chat_dating_app/models/recent_chat_model.dart';
 
 class MessageScreen extends StatefulWidget {
 	
-	final String chatDetails;
+	final RecentChatModel recentChatDetails;
 
-    const MessageScreen({Key key, this.chatDetails}) : super(key: key);
+    const MessageScreen({Key key, this.recentChatDetails}) : super(key: key);
 	
 	@override
 	MessageScreenState createState() {
@@ -70,7 +71,7 @@ class MessageScreenState extends State<MessageScreen> {
 						onPressed: () => Navigator.pop(context),
 					),
 					title: Text(
-						widget.chatDetails,
+						widget.recentChatDetails.user.firstname,
 						style: TextStyle(
 							color: Colors.black,
 							fontWeight: FontWeight.bold,
@@ -139,11 +140,11 @@ class MessageScreenState extends State<MessageScreen> {
 				children: <Widget>[
 					CircleAvatar(
 						radius: 20,
-						backgroundImage:NetworkImage(
-							'https://via.placeholder.com/150',
+						backgroundImage:AssetImage(
+							widget.recentChatDetails.user.imagePath,
 						),
 						backgroundColor: Colors.transparent,
-					)
+					),
 				],
 			),
 		);

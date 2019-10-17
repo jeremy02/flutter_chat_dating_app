@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_dating_app/models/recent_chat_model.dart';
 import 'package:flutter_chat_dating_app/screens/message_screen.dart';
+import 'package:intl/intl.dart';
 
 class RecentChatListItem extends StatelessWidget{
 	
-	final int listPosition;
+	final RecentChatModel lRecentChat;
 
-    const RecentChatListItem({Key key, this.listPosition}) : super(key: key);
+    const RecentChatListItem({Key key, this.lRecentChat}) : super(key: key);
 	
 	@override
 	Widget build(BuildContext context) {
+		
+		var textDate = lRecentChat.chatTime;
+		var timeDifference = DateTime.now().difference(textDate).inDays;
+		
 		return
 			Material(
 				child: InkWell(
@@ -16,7 +22,7 @@ class RecentChatListItem extends StatelessWidget{
 						Navigator.push(
 							context,
 							MaterialPageRoute(
-								builder: (context) => MessageScreen(chatDetails: "Francis O'Reilly")),
+								builder: (context) => MessageScreen(recentChatDetails: lRecentChat)),
 						);
 					},
 					child: Padding(
@@ -24,7 +30,7 @@ class RecentChatListItem extends StatelessWidget{
 						child: Row(
 							mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 							children: <Widget>[
-								badgeCount(listPosition.isOdd),
+								lRecentChat.unreadCount <= 0 ? Container() : badgeCount(lRecentChat.unreadCount),
 								Expanded(
 									child: Row(
 										children: <Widget>[
@@ -40,7 +46,10 @@ class RecentChatListItem extends StatelessWidget{
 									width: 10,
 								),
 								Text(
-									"8.24 PM",
+									timeDifference == 1 ? "Yesterday"
+										:
+									(timeDifference == 0 ? "Today" : DateFormat('dd/MM/yyyy').format(lRecentChat.chatTime))
+									,
 									style: TextStyle(
 										color: Colors.black,
 										fontSize: 13.0,
@@ -54,11 +63,8 @@ class RecentChatListItem extends StatelessWidget{
 			);
 	}
 	
-	Widget badgeCount(isShow){
-		return !isShow ?
-			Container()
-			:
-			Container(
+	Widget badgeCount(int unreadCount){
+		return Container(
 				margin: EdgeInsets.only(right: 8.0),
 				padding: EdgeInsets.all(8.0),
 				decoration: BoxDecoration(
@@ -66,7 +72,7 @@ class RecentChatListItem extends StatelessWidget{
 					color: Color.fromRGBO(237,86,93, 1.0),
 				),
 				child: Text(
-					"4",
+					unreadCount.toString(),
 					style: TextStyle(
 						color: Colors.white,
 						fontSize: 14.0,
@@ -78,8 +84,8 @@ class RecentChatListItem extends StatelessWidget{
 	Widget _imageContent() {
 		return CircleAvatar(
 			radius: 32.0,
-			backgroundImage:NetworkImage(
-				'https://via.placeholder.com/150',
+			backgroundImage:AssetImage(
+				lRecentChat.user.imagePath,
 			),
 			backgroundColor: Colors.transparent,
 		);
@@ -93,7 +99,7 @@ class RecentChatListItem extends StatelessWidget{
 				mainAxisAlignment: MainAxisAlignment.center,
 				children: <Widget>[
 					Text(
-						"James Martin",
+						lRecentChat.user.fullName,
 						style: TextStyle(
 							color: Colors.black,
 							fontSize: 16.0,
@@ -108,7 +114,7 @@ class RecentChatListItem extends StatelessWidget{
 						maxLines: 1,
 						text: TextSpan(children:
 						<TextSpan>[
-							TextSpan(text:"You: ",
+							TextSpan(text: lRecentChat.isFromMe ? "" :"You: ",
 								style: TextStyle(
 									color: Colors.blueGrey,
 									fontWeight: FontWeight.bold,
@@ -116,7 +122,7 @@ class RecentChatListItem extends StatelessWidget{
 								),
 							),
 							TextSpan(
-								text:"Wrap?There's such a long text",
+								text: lRecentChat.lastText,
 								style: TextStyle(
 									color: Colors.grey,
 									fontSize: 13.0,
