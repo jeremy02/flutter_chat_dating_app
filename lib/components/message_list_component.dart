@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_dating_app/models/chat_model.dart';
 import 'package:flutter_chat_dating_app/models/sectioned_list.dart';
+import 'package:flutter_chat_dating_app/models/users_model.dart';
 import 'package:flutter_chat_dating_app/widgets/chat_list_header_item.dart';
 import 'package:flutter_chat_dating_app/widgets/chat_list_message_item.dart';
 
@@ -8,9 +9,10 @@ class MessagesListComponent extends StatelessWidget {
 	
 	ScrollController srollController;
 	List<ChatModel> lMessageChatItems;
+	UserModel chatUser;
 	GlobalKey<AnimatedListState> listKey;
 	
-	MessagesListComponent({Key key, this.srollController, this.lMessageChatItems, this.listKey}) : super(key: key);
+	MessagesListComponent({Key key, this.srollController, this.lMessageChatItems, this.listKey, this.chatUser}) : super(key: key);
 	
 	@override
 	Widget build(BuildContext context) {
@@ -72,6 +74,7 @@ class MessagesListComponent extends StatelessWidget {
 				chatModelContent: item.chatModelContent,
 				isOdd: index.isOdd,
 				itemIndex: index,
+				chatUser : chatUser,
 			);
 			
 		}else{

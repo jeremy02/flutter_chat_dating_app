@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_dating_app/models/chat_model.dart';
+import 'package:flutter_chat_dating_app/models/users_model.dart';
 import 'package:intl/intl.dart';
 
 class ChatListMessageItem extends StatelessWidget{
@@ -7,8 +8,9 @@ class ChatListMessageItem extends StatelessWidget{
 	final ChatModel chatModelContent;
 	final bool isOdd;
 	final int itemIndex;
+	final UserModel chatUser;
 	
-	const ChatListMessageItem({Key key, this.chatModelContent, this.isOdd, this.itemIndex}) : super(key: key);
+	const ChatListMessageItem({Key key, this.chatModelContent, this.isOdd, this.itemIndex, this.chatUser}) : super(key: key);
 	
 	@override
 	Widget build(BuildContext context) {
@@ -46,8 +48,8 @@ class ChatListMessageItem extends StatelessWidget{
 			children: <Widget>[
 				CircleAvatar(
 					radius: 18.0,
-					backgroundImage:NetworkImage(
-						'https://via.placeholder.com/150',
+					backgroundImage:AssetImage(
+						chatUser.imagePath,
 					),
 					backgroundColor: Colors.transparent,
 				),

@@ -101,15 +101,12 @@ class RecentChatListItem extends StatelessWidget{
 				crossAxisAlignment: CrossAxisAlignment.start,
 				mainAxisAlignment: MainAxisAlignment.center,
 				children: <Widget>[
-					Hero(
-						tag: lRecentChat.user.fullName,
-						child: Text(
-							lRecentChat.user.fullName,
-							style: TextStyle(
-								color: Colors.black,
-								fontSize: 16.0,
-								fontWeight: FontWeight.bold,
-							),
+					Text(
+						lRecentChat.user.fullName,
+						style: TextStyle(
+							color: Colors.black,
+							fontSize: 16.0,
+							fontWeight: FontWeight.bold,
 						),
 					),
 					SizedBox(height: 4.0,),

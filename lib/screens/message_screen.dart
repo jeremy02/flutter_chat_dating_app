@@ -70,14 +70,11 @@ class MessageScreenState extends State<MessageScreen> {
 						),
 						onPressed: () => Navigator.pop(context),
 					),
-					title:Hero(
-						tag: widget.recentChatDetails.user.fullName,
-						child: Text(
-							widget.recentChatDetails.user.fullName,
-							style: TextStyle(
-								color: Colors.black,
-								fontWeight: FontWeight.bold,
-							),
+					title:Text(
+						widget.recentChatDetails.user.fullName,
+						style: TextStyle(
+							color: Colors.black,
+							fontWeight: FontWeight.bold,
 						),
 					),
 					actions: <Widget>[
@@ -123,6 +120,7 @@ class MessageScreenState extends State<MessageScreen> {
 										srollController: chatMessagesSrollController,
 										lMessageChatItems : lMessageItems,
 										listKey : listKey,
+										chatUser : widget.recentChatDetails.user,
 									),
 								),
 							),
