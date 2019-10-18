@@ -93,8 +93,8 @@ class ChatListMessageItem extends StatelessWidget{
 							begin: FractionalOffset.topCenter,
 							end: FractionalOffset.bottomCenter,
 							colors: [
-								Color.fromRGBO(238,101,95, 1.0),
-								Color.fromRGBO(237,74,91, 1.0),
+								Color.fromRGBO(238,104,95, 1.0),
+								Color.fromRGBO(237,62,90, 1.0),
 							],
 						),
 						borderRadius: BorderRadius.only(

@@ -92,8 +92,8 @@ class MessageScreenState extends State<MessageScreen> {
 									begin: Alignment.bottomLeft,
 									end: Alignment.bottomRight,
 									colors: [
-										Color.fromRGBO(237,91,94, 1.0),
-										Color.fromRGBO(236,67,90, 1.0),
+										Color.fromRGBO(237, 79, 93, 1.0),
+										Color.fromRGBO(236, 68, 91, 1.0),
 									],
 								),
 							),
@@ -201,7 +201,7 @@ class MessageScreenState extends State<MessageScreen> {
 							chatMessagesSrollController.animateTo(
 								0.0,
 								curve: Curves.easeOut,
-								duration: const Duration(milliseconds: 300),
+								duration: Duration(milliseconds: 300),
 							);
 						},
 					),
@@ -217,7 +217,7 @@ class MessageScreenState extends State<MessageScreen> {
 						),
 						borderRadius: BorderRadius.circular(32.0),
 					),
-					fillColor: Color.fromRGBO(217,71,92, 1.0),
+					fillColor: Color.fromRGBO(213, 61, 82, 1.0),
 					filled: true,
 					focusedBorder: OutlineInputBorder(
 						borderSide: BorderSide(
