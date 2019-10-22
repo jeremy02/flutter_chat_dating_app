@@ -17,4 +17,5 @@ Listing Screen            |               |  Detail Screen
 As exposed on the inspiration images, there's all the design details also present in this app.
 
 ## Notes
-To be completed
+Completed
+To add animation
