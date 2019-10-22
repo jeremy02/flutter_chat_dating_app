@@ -18,4 +18,4 @@ As exposed on the inspiration images, there's all the design details also presen
 
 ## Notes
 Completed
-To add animation
+To add smooth text animation
