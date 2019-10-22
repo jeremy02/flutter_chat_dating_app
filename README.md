@@ -17,7 +17,7 @@ Listing Screen            |               |  Detail Screen
 As exposed on the inspiration images, there's all the design details also present in this app.
 
 ## ToDo
-- Completed
+- To add smooth text transition
 
 ## Notes
 - Completed
